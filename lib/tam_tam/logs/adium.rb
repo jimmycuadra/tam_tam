@@ -12,6 +12,14 @@ module TamTam
       def to_a
         Dir["#{path}/**/*.xml"]
       end
+
+      def as(*accounts)
+        Dir["#{path}/*\.{#{accounts.join(',')}}/**/*.xml"]
+      end
+
+      def with(*participants)
+        Dir["#{path}/*\.*/{#{participants.join(',')}}/**/*.xml"]
+      end
     end
   end
 end

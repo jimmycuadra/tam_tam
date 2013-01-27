@@ -26,4 +26,44 @@ describe TamTam::Logs do
       }.to raise_error(TamTam::AbstractMethodError)
     end
   end
+
+  describe "#as" do
+    it "filters the logs by a single account" do
+      expect(subject.as("bongo").to_a).to eq(
+        Dir["#{adium_fixtures}/AIM.bongo/**/*.xml"]
+      )
+    end
+
+    it "filters the logs by multiple accounts (with multiple arguments)" do
+      expect(subject.as("bongo", "bongo@gmail.com").to_a).to eq(
+        Dir["#{adium_fixtures}/**/*.xml"]
+      )
+    end
+
+    it "filters the logs by multiple accounts (with an array)" do
+      expect(subject.as(["bongo", "bongo@gmail.com"]).to_a).to eq(
+        Dir["#{adium_fixtures}/**/*.xml"]
+      )
+    end
+  end
+
+  describe "#with" do
+    it "filters the logs by a single participant" do
+      expect(subject.with("bongita").to_a).to eq(
+        Dir["#{adium_fixtures}/AIM.bongo/**/*.xml"]
+      )
+    end
+
+    it "filters the logs by multiple participants (with multiple arguments)" do
+      expect(subject.with("bongita", "rumples@gmail.com").to_a).to eq(
+        Dir["#{adium_fixtures}/**/*.xml"]
+      )
+    end
+
+    it "filters the logs by multiple participants (with an array)" do
+      expect(subject.with(["bongita", "rumples@gmail.com"]).to_a).to eq(
+        Dir["#{adium_fixtures}/**/*.xml"]
+      )
+    end
+  end
 end
