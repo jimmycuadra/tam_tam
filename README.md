@@ -29,16 +29,10 @@ gem "tam_tam"
 Create a new logs object with:
 
 ``` ruby
-logs = TamTam::Logs.new
-```
-
-or the shorthand:
-
-``` ruby
 logs = TamTam.new
 ```
 
-To specify a particular adapter (chat client), pass an `adapter` option. If, for any reason, your logs for the given chat client are in a non-standard location, you can also provide the path the logs. These are the defaults, and equivalent to the calls above:
+To specify a particular adapter (chat client), pass an `adapter` option. If, for any reason, your logs for the given chat client are in a non-standard location, you can also provide the path the logs. These are the defaults, and equivalent to the call above:
 
 ``` ruby
 logs = TamTam.new(
@@ -49,7 +43,7 @@ logs = TamTam.new(
 
 ### Filtering logs
 
-Logs can be filtered by participants and date. The following methods are chainable. Each returns a new `TamTam::Logs` object filtered by the supplied criteria.
+Logs can be filtered by participants and date. The following methods are chainable.
 
 #### #as
 
@@ -71,7 +65,7 @@ logs.with("MyFriendJoe", "my.secret.crush@gmail.com")
 
 #### #on
 
-Limits logs to chats the occurred on a particular date. The date can be supplied as a string (any format Chronic accepts) or a Date/Time/DateTime/etc. object.
+Limits logs to chats the occurred on a particular date. The date can be supplied as a string (any format Chronic accepts) or a temporal object (`Date`, `Time`, etc.)
 
 ``` ruby
 logs.on("September 23, 2013")
@@ -81,7 +75,7 @@ logs.on(Time.now)
 
 #### #between
 
-Limits logs to chats that occurred within a date range. Takes two dates, which, like `on`, can be strings or Date/Time/DateTime/etc. objects.
+Limits logs to chats that occurred within a date range. Takes two dates, which, like `on`, can be strings or temporal objects.
 
 ``` ruby
 logs.between(5.days.ago, Date.today)
@@ -89,30 +83,23 @@ logs.between(5.days.ago, Date.today)
 
 ### Filtering messages
 
-Extract a `TamTam::MessageSet` from a set of logs:
-
-``` ruby
-messages = logs.messages
-```
-
-To filter a message set, use the following methods. They are all chainable and return a new `TamTam::MessageSet` object.
+Messages can be filtered by contents. The following methods are chainable along with the log filtering methods.
 
 #### #containing
 
 Limits messages to those containing the provided substring or matching the provided regular expression.
 
 ``` ruby
-messages.containing("how do you feel about")
-messages.containing(/^lol,?\s+/)
+logs.containing("how do you feel about")
+logs.containing(/^lol,?\s+/)
 ```
 
-### Extracting messages
+### Accessing messages
 
-Once you have filtered logs and messages down to the set you want, you can extra the messages themselves by converting them into an array or iterating over them with a method from `Enumerable`.
+Once you have filtered logs and messages down to the set you want, you can extra the messages themselves as an array of `TamTam::Message` objects with the `messages` method:
 
 ``` ruby
-messages.to_a
-messages.each { |message| message.inspect }
+logs.messages
 ```
 
 ### Messages
