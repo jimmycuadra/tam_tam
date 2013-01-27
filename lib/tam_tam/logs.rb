@@ -10,12 +10,21 @@ module TamTam
       attr_accessor :adapters
 
       def inherited(base)
-        key = base.name.split(/::/).last.downcase.to_sym
+        name = base.name
+
+        if name.nil?
+          key = :test
+        else
+          key = name.split(/::/).last.downcase.to_sym
+        end
+
         self.adapters[key] = base
       end
 
       def default_path
-        raise AbstractMethodError
+        raise AbstractMethodError.new(
+          ".default_path must be defined in the subclass."
+        )
       end
     end
 
@@ -29,6 +38,14 @@ module TamTam
 
     def messages
       Messages.new
+    end
+
+    [:to_a, :as, :with, :on, :between].each do |method|
+      define_method(method) do
+        raise AbstractMethodError.new(
+          "##{method} must be defined in the subclass."
+        )
+      end
     end
   end
 end

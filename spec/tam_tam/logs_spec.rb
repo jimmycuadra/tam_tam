@@ -15,15 +15,41 @@ describe TamTam::Logs do
     end
   end
 
+  [:default_path].each do |method|
+    it "raises an exception if .#{method} is not implemented by the subclass" do
+      expect {
+        described_class.send(method)
+      }.to raise_error(
+        TamTam::AbstractMethodError,
+        ".#{method} must be defined in the subclass."
+      )
+    end
+  end
+
+  let(:subclass_without_instance_methods) do
+    Class.new(TamTam::Logs) do
+      class << self
+        def default_path
+          ""
+        end
+      end
+    end
+  end
+
+  [:to_a, :as, :with, :on, :between].each do |method|
+    it "raises an exception if ##{method} is not implemented by the subclass" do
+      expect {
+        subclass_without_instance_methods.new.send(method)
+      }.to raise_error(
+        TamTam::AbstractMethodError,
+        "##{method} must be defined in the subclass."
+      )
+    end
+  end
+
   describe "#to_a" do
     it "returns an array of log files" do
       expect(subject.to_a).to eq(Dir["#{adium_fixtures}/**/*.xml"])
-    end
-
-    it "raises an exception if #to_a is not implemented by the subclass" do
-      expect {
-        described_class.new.to_a
-      }.to raise_error(TamTam::AbstractMethodError)
     end
   end
 
