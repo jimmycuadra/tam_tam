@@ -36,7 +36,7 @@ To specify a particular adapter (chat client), pass an `adapter` option. If, for
 
 ``` ruby
 logs = TamTam.new(
-  client: :adium,
+  adapter: :adium,
   path: "~/Library/Application Support/Adium 2.0/Users/Default/Logs"
 )
 ```
