@@ -1,3 +1,5 @@
+require "chronic"
+
 require "tam_tam/messages"
 
 module TamTam

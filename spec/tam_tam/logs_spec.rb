@@ -66,4 +66,29 @@ describe TamTam::Logs do
       )
     end
   end
+
+  describe "#on" do
+    it "filters the logs by date (as a string)" do
+      expect(subject.on("July 23, 2011").to_a).to eq(
+        Dir["#{adium_fixtures}/AIM.bongo/bongita/*07-23*/*.xml"]
+      )
+    end
+
+    it "filters the logs by date (as a Time object)" do
+      expect(subject.on(Time.new(2011, 7, 23)).to_a).to eq(
+        Dir["#{adium_fixtures}/AIM.bongo/bongita/*07-23*/*.xml"]
+      )
+    end
+  end
+
+  describe "#between" do
+    it "filters the logs by a date range" do
+      start = "July 23, 2011"
+      stop = Time.new(2011, 7, 24)
+
+      expect(subject.between(start, stop).to_a).to eq(
+        Dir["#{adium_fixtures}/AIM.bongo/**/*.xml"]
+      )
+    end
+  end
 end
