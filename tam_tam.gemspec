@@ -17,7 +17,10 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
+  gem.add_runtime_dependency("chronic")
   gem.add_development_dependency("rspec")
+  gem.add_development_dependency("debugger")
+  gem.add_development_dependency("debugger-pry")
   gem.add_development_dependency("pry")
   gem.add_development_dependency("cane")
   gem.add_development_dependency("simplecov")
