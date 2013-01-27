@@ -19,5 +19,11 @@ describe TamTam::Logs do
     it "returns an array of log files" do
       expect(subject.to_a).to eq(Dir["#{adium_fixtures}/**/*.xml"])
     end
+
+    it "raises an exception if #to_a is not implemented by the subclass" do
+      expect {
+        described_class.new.to_a
+      }.to raise_error(TamTam::AbstractMethodError)
+    end
   end
 end

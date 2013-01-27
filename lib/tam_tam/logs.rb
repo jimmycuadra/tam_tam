@@ -1,9 +1,9 @@
 require "tam_tam/messages"
 
 module TamTam
-  class Logs
-    class AbstractMethodError < StandardError; end
+  class AbstractMethodError < StandardError; end
 
+  class Logs
     class << self
       attr_accessor :adapters
 
