@@ -2,23 +2,15 @@ require "tam_tam/message"
 
 module TamTam
   class MessageSet
-    attr_accessor :messages
-    protected :messages
+    attr_accessor :data
+    protected :data
 
-    def initialize(messages = [])
-      messages = [messages] unless messages.is_a?(Array)
-
-      self.messages = messages.map do |message|
-        if message.instance_of?(Message)
-          message
-        else
-          Message.new(message)
-        end
-      end
+    def initialize(data)
+      self.data = data.map { |data| Message.new(data) }
     end
 
     def containing(phrase)
-      filtered_messages = messages.select do |message|
+      data.select! do |message|
         case phrase
         when Regexp
           message.text.match(phrase)
@@ -27,11 +19,11 @@ module TamTam
         end
       end
 
-      self.class.new(filtered_messages)
+      self
     end
 
     def ==(other)
-      messages == other.messages
+      data == other.data
     end
 
     def to_s
@@ -41,7 +33,7 @@ module TamTam
     alias_method :inspect, :to_s
 
     def size
-      messages.size
+      data.size
     end
 
     alias_method :length, :size

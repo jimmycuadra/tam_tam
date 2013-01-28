@@ -23,7 +23,7 @@ describe TamTam::MessageSet do
 
   describe "#containing" do
     it "returns only messages containing the string" do
-      messages = described_class.new(messages_data[0])
+      messages = described_class.new([messages_data[0]])
       expect(subject.containing("hey")).to eq(messages)
     end
 
