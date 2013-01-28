@@ -9,10 +9,6 @@ describe TamTam::Logs do
     TamTam.new(path: adium_fixtures)
   end
 
-  after do
-    described_class.adapters.delete(:test)
-  end
-
   describe "#messages" do
     it "returns the messages for the given logs" do
       expect(subject.messages).to be_a(TamTam::MessageSet)
@@ -30,24 +26,30 @@ describe TamTam::Logs do
     end
   end
 
-  let(:adapter_without_instance_methods) do
-    klass = Class.new(described_class)
+  context "with a test adapter" do
+    let(:adapter_without_instance_methods) do
+      klass = Class.new(described_class)
 
-    described_class.singleton_class.abstract_methods.each do |method|
-      klass.stub(method)
+      described_class.singleton_class.abstract_methods.each do |method|
+        klass.stub(method)
+      end
+
+      klass
     end
 
-    klass
-  end
+    after do
+      described_class.adapters.delete(:test)
+    end
 
-  described_class.send(:abstract_methods).each do |method|
-    it "raises an exception if ##{method} is not implemented by the adapter" do
-      expect {
-        adapter_without_instance_methods.new.send(method)
-      }.to raise_error(
-        TamTam::AbstractMethodError,
-        "##{method} must be defined in the adapter."
-      )
+    described_class.send(:abstract_methods).each do |method|
+      it "raises an exception if ##{method} is not implemented by the adapter" do
+        expect {
+          adapter_without_instance_methods.new.send(method)
+        }.to raise_error(
+          TamTam::AbstractMethodError,
+          "##{method} must be defined in the adapter."
+        )
+      end
     end
   end
 
