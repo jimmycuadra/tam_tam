@@ -30,7 +30,7 @@ module TamTam
       abstract_methods.each do |method|
         define_method(method) do
           raise AbstractMethodError.new(
-            ".#{method} must be defined in the subclass."
+            ".#{method} must be defined in the adapter."
           )
         end
       end
@@ -58,7 +58,7 @@ module TamTam
     abstract_methods.each do |method|
       define_method(method) do
         raise AbstractMethodError.new(
-          "##{method} must be defined in the subclass."
+          "##{method} must be defined in the adapter."
         )
       end
     end

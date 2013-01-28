@@ -16,17 +16,17 @@ describe TamTam::Logs do
   end
 
   described_class.singleton_class.send(:abstract_methods).each do |method|
-    it "raises an exception if .#{method} is not implemented by the subclass" do
+    it "raises an exception if .#{method} is not implemented by the adapter" do
       expect {
         described_class.send(method)
       }.to raise_error(
         TamTam::AbstractMethodError,
-        ".#{method} must be defined in the subclass."
+        ".#{method} must be defined in the adapter."
       )
     end
   end
 
-  let(:subclass_without_instance_methods) do
+  let(:adapter_without_instance_methods) do
     klass = Class.new(described_class)
 
     described_class.singleton_class.abstract_methods.each do |method|
@@ -37,12 +37,12 @@ describe TamTam::Logs do
   end
 
   described_class.send(:abstract_methods).each do |method|
-    it "raises an exception if ##{method} is not implemented by the subclass" do
+    it "raises an exception if ##{method} is not implemented by the adapter" do
       expect {
-        subclass_without_instance_methods.new.send(method)
+        adapter_without_instance_methods.new.send(method)
       }.to raise_error(
         TamTam::AbstractMethodError,
-        "##{method} must be defined in the subclass."
+        "##{method} must be defined in the adapter."
       )
     end
   end
