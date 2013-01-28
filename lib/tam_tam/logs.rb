@@ -1,3 +1,4 @@
+require "tam_tam/core"
 require "tam_tam/message_set"
 
 module TamTam
