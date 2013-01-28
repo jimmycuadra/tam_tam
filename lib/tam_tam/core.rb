@@ -14,5 +14,9 @@ module TamTam
     def register_adapter(key, adapter)
       @adapters[key] = adapter
     end
+
+    def unregister_adapter(key)
+      @adapters.delete(key)
+    end
   end
 end

@@ -11,17 +11,12 @@ describe TamTam do
       expect(adapter).to be_a(described_class::Adapters::Test)
     end
 
-    context "when the Adium adapter is not registered" do
-      after do
-        described_class.register_adapter(
-          :adium,
-          described_class::Adapters::Adium
-        )
-      end
-
-      it "returns a the first registered adapter if Adium is not registered" do
-        described_class.instance_variable_get("@adapters").delete(:adium)
+    it "returns a the first registered adapter if Adium is not registered" do
+      begin
+        described_class.unregister_adapter(:adium)
         expect(described_class.new).to be_a(described_class::Adapters::Test)
+      ensure
+        described_class.register_adapter(:adium, TamTam::Adapters::Adium)
       end
     end
   end
