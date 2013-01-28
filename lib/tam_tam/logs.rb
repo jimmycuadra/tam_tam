@@ -49,6 +49,12 @@ module TamTam
       matches
     end
 
+    def to_s
+      %{#<#{self.class.name}:0x#{object_id.to_s(16)} path="#{path}">}
+    end
+
+    alias_method :inspect, :to_s
+
     private
 
     def self.abstract_methods

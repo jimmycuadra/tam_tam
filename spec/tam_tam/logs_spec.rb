@@ -9,6 +9,14 @@ describe TamTam::Logs do
     TamTam.new(path: adium_fixtures)
   end
 
+  describe "to_s" do
+    it "shows the object ID as hexadecimal and the path" do
+      expect(subject.to_s).to match(
+        %r{#<TamTam::Logs::Adium:0x[0-9a-f]+ path="[\w/]+">}
+      )
+    end
+  end
+
   describe "#messages" do
     it "returns the messages for the given logs" do
       expect(subject.messages).to be_a(TamTam::MessageSet)
