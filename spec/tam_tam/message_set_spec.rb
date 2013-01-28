@@ -34,4 +34,10 @@ describe TamTam::MessageSet do
       expect(subject.matching(/h(?:ey|i)/)).to eq(messages)
     end
   end
+
+  describe "#each" do
+    it "yields each message to the block" do
+      expect(subject.map(&:sender)).to eql(["wongo", "bongo", "wongo"])
+    end
+  end
 end
