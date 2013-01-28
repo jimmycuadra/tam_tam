@@ -44,7 +44,7 @@ module TamTam
       end
 
       def messages
-        messages_data = to_a.each do |log_path|
+        messages_data = matches.each do |log_path|
           xml = File.read(log_path)
           doc = Nokogiri.parse(xml)
 

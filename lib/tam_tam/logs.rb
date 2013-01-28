@@ -43,10 +43,6 @@ module TamTam
       self.matches = self.class.default_matches(path)
     end
 
-    def to_a
-      matches
-    end
-
     def to_s
       %{#<#{self.class.name}:0x#{object_id.to_s(16)} path="#{path}">}
     end
