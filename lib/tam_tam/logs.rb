@@ -21,7 +21,13 @@ module TamTam
         self.adapters[key] = base
       end
 
-      [:default_path, :default_matches].each do |method|
+      private
+
+      def self.abstract_methods
+        [:default_path, :default_matches]
+      end
+
+      abstract_methods.each do |method|
         define_method(method) do
           raise AbstractMethodError.new(
             ".#{method} must be defined in the subclass."
@@ -39,23 +45,23 @@ module TamTam
       self.matches = self.class.default_matches(path)
     end
 
-    def messages
-      Messages.new
-    end
-
     def to_a
       matches
     end
 
-    [:as, :with, :on, :between].each do |method|
+    private
+
+    def self.abstract_methods
+      [:messages, :as, :with, :on, :between]
+    end
+
+    abstract_methods.each do |method|
       define_method(method) do
         raise AbstractMethodError.new(
           "##{method} must be defined in the subclass."
         )
       end
     end
-
-    private
 
     def add_filter(filter_matches)
       self.matches = matches & filter_matches

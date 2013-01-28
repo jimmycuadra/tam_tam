@@ -39,6 +39,10 @@ module TamTam
 
         add_filter(filter_matches)
       end
+
+      def messages
+        Messages.new
+      end
     end
   end
 end
