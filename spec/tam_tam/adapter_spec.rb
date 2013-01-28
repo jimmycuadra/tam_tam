@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TamTam::Logs do
+describe TamTam::Adapter do
   def adium_fixtures
     File.expand_path(File.join("..", "..", "fixtures", "adium"), __FILE__)
   end
@@ -12,7 +12,7 @@ describe TamTam::Logs do
   describe "to_s" do
     it "shows the object ID as hexadecimal and the path" do
       expect(subject.to_s).to match(
-        %r{#<TamTam::Logs::Adium:0x[0-9a-f]+ path="[\w/]+">}
+        %r{#<TamTam::Adapters::Adium:0x[0-9a-f]+ path="[\w/]+">}
       )
     end
   end
@@ -34,30 +34,14 @@ describe TamTam::Logs do
     end
   end
 
-  context "with a test adapter" do
-    let(:adapter_without_instance_methods) do
-      klass = Class.new(described_class)
-
-      described_class.singleton_class.abstract_methods.each do |method|
-        klass.stub(method)
-      end
-
-      klass
-    end
-
-    after do
-      described_class.adapters.delete(:test)
-    end
-
-    described_class.send(:abstract_methods).each do |method|
-      it "raises an exception if ##{method} is not implemented by the adapter" do
-        expect {
-          adapter_without_instance_methods.new.send(method)
-        }.to raise_error(
-          TamTam::AbstractMethodError,
-          "##{method} must be defined in the adapter."
-        )
-      end
+  described_class.send(:abstract_methods).each do |method|
+    it "raises an exception if ##{method} is not implemented by the adapter" do
+      expect {
+        TamTam.new(adapter: :test).send(method)
+      }.to raise_error(
+        TamTam::AbstractMethodError,
+        "##{method} must be defined in the adapter."
+      )
     end
   end
 

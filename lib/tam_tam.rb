@@ -1,1 +1,1 @@
-require "tam_tam/logs/adium"
+require "tam_tam/adapters/adium"

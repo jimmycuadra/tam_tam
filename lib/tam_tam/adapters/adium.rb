@@ -1,11 +1,11 @@
+require "tam_tam/adapter"
+
 require "chronic"
 require "nokogiri"
 
-require "tam_tam/logs"
-
 module TamTam
-  class Logs
-    class Adium < Logs
+  module Adapters
+    class Adium < Adapter
       class << self
         def default_path
           "#{Dir.home}/Library/Application Support/Adium 2.0/Users/Default/Logs"
@@ -67,4 +67,6 @@ module TamTam
       end
     end
   end
+
+  register_adapter :adium, Adapters::Adium
 end

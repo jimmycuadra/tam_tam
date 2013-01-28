@@ -4,22 +4,8 @@ require "tam_tam/message_set"
 module TamTam
   class AbstractMethodError < StandardError; end
 
-  class Logs
+  class Adapter
     class << self
-      attr_accessor :adapters
-
-      def inherited(base)
-        name = base.name
-
-        if name.nil?
-          key = :test
-        else
-          key = name.split(/::/).last.downcase.to_sym
-        end
-
-        self.adapters[key] = base
-      end
-
       private
 
       def self.abstract_methods
@@ -34,8 +20,6 @@ module TamTam
         end
       end
     end
-
-    self.adapters = {}
 
     attr_accessor :path, :matches
 
