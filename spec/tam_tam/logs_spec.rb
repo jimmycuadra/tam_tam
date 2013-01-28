@@ -9,6 +9,10 @@ describe TamTam::Logs do
     TamTam.new(path: adium_fixtures)
   end
 
+  after do
+    described_class.adapters.delete(:test)
+  end
+
   describe "#messages" do
     it "returns the messages for the given logs" do
       expect(subject.messages).to be_a(TamTam::MessageSet)
