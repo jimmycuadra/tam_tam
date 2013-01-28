@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = TamTam::VERSION
   gem.authors       = ["Jimmy Cuadra"]
   gem.email         = ["jimmy@jimmycuadra.com"]
-  gem.description   = %q{Statitics about your conversations from online chat logs.}
-  gem.summary       = %q{Statitics about your conversations from online chat logs.}
+  gem.description   = %q{Parse, navigate, and analyze logs from online chat clients.}
+  gem.summary       = %q{Parse, navigate, and analyze logs from online chat clients.}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
