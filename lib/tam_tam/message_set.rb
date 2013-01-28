@@ -2,10 +2,13 @@ require "tam_tam/message"
 
 module TamTam
   class MessageSet
+    attr_accessor :messages
+    protected :messages
+
     def initialize(messages = [])
       messages = [messages] unless messages.is_a?(Array)
 
-      @messages = messages.map do |message|
+      self.messages = messages.map do |message|
         if message.instance_of?(Message)
           message
         else
@@ -15,7 +18,7 @@ module TamTam
     end
 
     def containing(phrase)
-      filtered_messages = @messages.select do |message|
+      filtered_messages = messages.select do |message|
         case phrase
         when Regexp
           message.text.match(phrase)
@@ -38,15 +41,9 @@ module TamTam
     alias_method :inspect, :to_s
 
     def size
-      @messages.size
+      messages.size
     end
 
     alias_method :length, :size
-
-    protected
-
-    def messages
-      @messages
-    end
   end
 end

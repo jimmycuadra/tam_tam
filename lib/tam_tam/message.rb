@@ -1,21 +1,18 @@
 module TamTam
   class Message
+    attr_accessor :data
+    protected :data
+
     def initialize(data)
-      @data = data
+      self.data = data
     end
 
     def text
-      @data[:text]
+      data[:text]
     end
 
     def ==(other)
       data == other.data
-    end
-
-    protected
-
-    def data
-      @data
     end
   end
 end
