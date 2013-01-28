@@ -1,5 +1,5 @@
 require "simplecov"
-SimpleCov.start
+SimpleCov.start { add_filter "spec" }
 
 require "pry"
 require "debugger"
@@ -10,14 +10,12 @@ require "tam_tam"
 module TamTam
   module Adapters
     class Test < Adapter
-      class << self
-        def default_path
-          ""
-        end
+      def self.default_path
+        ""
+      end
 
-        def default_matches(path)
-          []
-        end
+      def default_matches
+        []
       end
     end
   end

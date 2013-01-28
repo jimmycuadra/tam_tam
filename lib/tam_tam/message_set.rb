@@ -12,13 +12,15 @@ module TamTam
     end
 
     def including(phrase)
-      data.select! { |message| message.text.include?(phrase) }
-      self
+      copy = dup
+      copy.data = data.select { |message| message.text.include?(phrase) }
+      copy
     end
 
     def matching(pattern)
-      data.select! { |message| message.text.match(pattern) }
-      self
+      copy = dup
+      copy.data = data.select { |message| message.text.match(pattern) }
+      copy
     end
 
     def each

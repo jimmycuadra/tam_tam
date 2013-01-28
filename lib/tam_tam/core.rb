@@ -5,10 +5,11 @@ module TamTam
 
   class << self
     def new(options = {})
-      adapter = options.delete(:adapter)
-      adapter = :adium if adapter.nil? && @adapters[:adium]
-      adapter = @adapters.keys.first if adapter.nil?
-      @adapters[adapter].new(options)
+      adapter_key = options[:adapter]
+      adapter_key = :adium if adapter_key.nil? && adapters.include?(:adium)
+      adapter_key = adapters.first if adapter_key.nil?
+      adapter = @adapters[adapter_key].new(options[:path])
+      LogSet.new(adapter)
     end
 
     def register_adapter(key, adapter)
@@ -17,6 +18,10 @@ module TamTam
 
     def unregister_adapter(key)
       @adapters.delete(key)
+    end
+
+    def adapters
+      @adapters.keys
     end
   end
 end
