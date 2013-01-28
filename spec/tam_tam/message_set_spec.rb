@@ -21,15 +21,17 @@ describe TamTam::MessageSet do
     end
   end
 
-  describe "#containing" do
-    it "returns only messages containing the string" do
+  describe "#including" do
+    it "returns only messages including the string" do
       messages = described_class.new([messages_data[0]])
-      expect(subject.containing("hey")).to eq(messages)
+      expect(subject.including("hey")).to eq(messages)
     end
+  end
 
+  describe "#matching" do
     it "returns only messages matching a regexp" do
       messages = described_class.new(messages_data[0, 2])
-      expect(subject.containing(/h(?:ey|i)/)).to eq(messages)
+      expect(subject.matching(/h(?:ey|i)/)).to eq(messages)
     end
   end
 end

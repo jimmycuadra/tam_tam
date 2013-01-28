@@ -2,6 +2,8 @@ require "tam_tam/message"
 
 module TamTam
   class MessageSet
+    include Enumerable
+
     attr_accessor :data
     protected :data
 
@@ -9,17 +11,18 @@ module TamTam
       self.data = data.map { |data| Message.new(data) }
     end
 
-    def containing(phrase)
-      data.select! do |message|
-        case phrase
-        when Regexp
-          message.text.match(phrase)
-        else
-          message.text.include?(phrase)
-        end
-      end
-
+    def including(phrase)
+      data.select! { |message| message.text.include?(phrase) }
       self
+    end
+
+    def matching(pattern)
+      data.select! { |message| message.text.match(pattern) }
+      self
+    end
+
+    def each
+      data.each { |message| yield message }
     end
 
     def ==(other)

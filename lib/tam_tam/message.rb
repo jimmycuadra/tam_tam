@@ -7,8 +7,16 @@ module TamTam
       self.data = data
     end
 
+    def sender
+      data[:sender]
+    end
+
     def text
       data[:text]
+    end
+
+    def time
+      data[:time]
     end
 
     def ==(other)
