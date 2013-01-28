@@ -44,7 +44,9 @@ module TamTam
       end
 
       def messages
-        messages_data = matches.each do |log_path|
+        return @messages if @messages
+
+        data = matches.each do |log_path|
           xml = File.read(log_path)
           doc = Nokogiri.parse(xml)
 
@@ -57,7 +59,7 @@ module TamTam
           end
         end.flatten
 
-        MessageSet.new(messages_data)
+        @messages = MessageSet.new(data)
       end
     end
   end
