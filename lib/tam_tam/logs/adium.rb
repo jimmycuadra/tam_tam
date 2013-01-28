@@ -46,7 +46,13 @@ module TamTam
       def messages
         return @messages if @messages
 
-        data = matches.map do |log_path|
+        @messages = MessageSet.new(load_messages)
+      end
+
+      private
+
+      def load_messages
+        matches.map do |log_path|
           xml = File.read(log_path)
           doc = Nokogiri.parse(xml)
 
@@ -58,8 +64,6 @@ module TamTam
             }
           end
         end.flatten
-
-        @messages = MessageSet.new(data)
       end
     end
   end
