@@ -1,5 +1,3 @@
-require "chronic"
-
 require "tam_tam/message_set"
 
 module TamTam

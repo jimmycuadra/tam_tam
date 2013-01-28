@@ -13,6 +13,14 @@ describe TamTam::MessageSet do
     described_class.new(messages_data)
   end
 
+  describe "#to_s" do
+    it "shows the object ID as hexadecimal and the message count" do
+      expect(subject.to_s).to match(
+        %r{#<TamTam::MessageSet:0x[0-9a-f]+ size=3>}
+      )
+    end
+  end
+
   describe "#containing" do
     it "returns only messages containing the string" do
       messages = described_class.new(messages_data[0])

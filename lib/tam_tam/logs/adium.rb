@@ -1,3 +1,6 @@
+require "chronic"
+require "nokogiri"
+
 require "tam_tam/logs"
 
 module TamTam
@@ -41,7 +44,20 @@ module TamTam
       end
 
       def messages
-        MessageSet.new
+        messages_data = to_a.each do |log_path|
+          xml = File.read(log_path)
+          doc = Nokogiri.parse(xml)
+
+          doc.css("chat message").map do |message|
+            {
+              sender: message.attribute("sender").value,
+              text: message.text,
+              time: Chronic.parse(message.attribute("time").value)
+            }
+          end
+        end.flatten
+
+        MessageSet.new(messages_data)
       end
     end
   end

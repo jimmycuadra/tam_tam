@@ -31,6 +31,18 @@ module TamTam
       messages == other.messages
     end
 
+    def to_s
+      %{#<#{self.class.name}:0x#{object_id.to_s(16)} size=#{size}>}
+    end
+
+    alias_method :inspect, :to_s
+
+    def size
+      @messages.size
+    end
+
+    alias_method :length, :size
+
     protected
 
     def messages
