@@ -41,7 +41,7 @@ module TamTam
       end
 
       def messages
-        Messages.new
+        MessageSet.new
       end
     end
   end

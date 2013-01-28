@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TamTam::Messages do
+describe TamTam::MessageSet do
   let(:messages_data) do
     [
       { sender: "wongo", text: "hey there", time: Time.now - 10000 },
@@ -10,7 +10,7 @@ describe TamTam::Messages do
   end
 
   subject do
-    TamTam::Messages.new(messages_data)
+    described_class.new(messages_data)
   end
 
   describe "#containing" do

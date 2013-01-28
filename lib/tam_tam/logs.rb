@@ -1,6 +1,6 @@
 require "chronic"
 
-require "tam_tam/messages"
+require "tam_tam/message_set"
 
 module TamTam
   class AbstractMethodError < StandardError; end

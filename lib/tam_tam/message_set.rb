@@ -1,7 +1,7 @@
 require "tam_tam/message"
 
 module TamTam
-  class Messages
+  class MessageSet
     def initialize(messages = [])
       messages = [messages] unless messages.is_a?(Array)
 
