@@ -5,7 +5,7 @@ module TamTam
     class Adium < Logs
       class << self
         def default_path
-          "~/Library/Application Support/Adium 2.0/Users/Default/Logs"
+          "#{Dir.home}/Library/Application Support/Adium 2.0/Users/Default/Logs"
         end
 
         def default_matches(path)
