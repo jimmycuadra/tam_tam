@@ -27,16 +27,12 @@ describe TamTam::Logs do
   end
 
   let(:subclass_without_instance_methods) do
-    Class.new(TamTam::Logs) do
-      class << self
-        def default_path
-          ""
-        end
-      end
-    end
+    klass = Class.new(TamTam::Logs)
+    [:default_path, :default_matches].each { |method| klass.stub(method) }
+    klass
   end
 
-  [:to_a, :as, :with, :on, :between].each do |method|
+  [:as, :with, :on, :between].each do |method|
     it "raises an exception if ##{method} is not implemented by the subclass" do
       expect {
         subclass_without_instance_methods.new.send(method)
@@ -48,7 +44,7 @@ describe TamTam::Logs do
   end
 
   describe "#to_a" do
-    it "returns an array of log files" do
+    it "returns an array of all log file paths" do
       expect(subject.to_a).to eq(Dir["#{adium_fixtures}/**/*.xml"])
     end
   end
@@ -71,6 +67,12 @@ describe TamTam::Logs do
         Dir["#{adium_fixtures}/**/*.xml"]
       )
     end
+
+    it "allows chaining" do
+      logs = subject.as("bongo").with("rumples@gmail.com").to_a
+
+      expect(logs).to be_empty
+    end
   end
 
   describe "#with" do
@@ -91,6 +93,12 @@ describe TamTam::Logs do
         Dir["#{adium_fixtures}/**/*.xml"]
       )
     end
+
+    it "allows chaining" do
+      logs = subject.with("rumples@gmail.com").as("bongo").to_a
+
+      expect(logs).to be_empty
+    end
   end
 
   describe "#on" do
@@ -105,6 +113,12 @@ describe TamTam::Logs do
         Dir["#{adium_fixtures}/AIM.bongo/bongita/*07-23*/*.xml"]
       )
     end
+
+    it "allows chaining" do
+      logs = subject.on("July 23, 2011").with("rumples@mail.com").to_a
+
+      expect(logs).to be_empty
+    end
   end
 
   describe "#between" do
@@ -115,6 +129,14 @@ describe TamTam::Logs do
       expect(subject.between(start, stop).to_a).to eq(
         Dir["#{adium_fixtures}/AIM.bongo/**/*.xml"]
       )
+    end
+
+    it "allows chaining" do
+      start = "July 23, 2011"
+      stop = Time.new(2011, 7, 24)
+      logs = subject.between(start, stop).with("rumples@gmail.com").to_a
+
+      expect(logs).to be_empty
     end
   end
 end
