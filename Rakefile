@@ -1,9 +1,10 @@
 require "bundler/gem_tasks"
+require "rspec/core/rake_task"
 require "cane/rake_task"
 
-desc "Run cane to check quality metrics"
+RSpec::Core::RakeTask.new(:spec)
 Cane::RakeTask.new(:quality) do |cane|
-  cane.no_doc = true
+  cane.add_threshold "coverage/covered_percent", :>=, 100
 end
 
-task :default => :quality
+task :default => [:spec, :quality]
