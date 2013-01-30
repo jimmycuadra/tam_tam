@@ -1,9 +1,7 @@
 require "spec_helper"
 
 describe TamTam::Adapters::Adium do
-  def fixtures
-    File.expand_path(File.join("..", "..", "..", "fixtures", "adium"), __FILE__)
-  end
+  let(:fixtures) { fixtures_for("adium") }
 
   subject { described_class.new(fixtures) }
 

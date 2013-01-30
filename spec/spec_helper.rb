@@ -1,3 +1,13 @@
+module SpecHelper
+  def fixtures_for(adapter)
+    File.expand_path(File.join("..", "fixtures", adapter), __FILE__)
+  end
+end
+
+RSpec.configure do |config|
+  config.include(SpecHelper)
+end
+
 require "simplecov"
 
 class SimpleCov::Formatter::QualityFormatter
