@@ -35,6 +35,15 @@ describe TamTam::MessageSet do
     end
   end
 
+  describe "#sent_by" do
+    it "returns only messages sent by the specified sender" do
+      wongos_messages = described_class.new(
+        messages_data.reject { |m| m[:sender] != "wongo" }
+      )
+      expect(subject.sent_by("wongo")).to eq(wongos_messages)
+    end
+  end
+
   describe "#each" do
     it "yields each message to the block" do
       expect(subject.map(&:sender)).to eql(["wongo", "bongo", "wongo"])

@@ -23,6 +23,12 @@ module TamTam
       copy
     end
 
+    def sent_by(sender)
+      copy = dup
+      copy.data = data.select { |message| message.sender == sender }
+      copy
+    end
+
     def each
       data.each { |message| yield message }
     end
