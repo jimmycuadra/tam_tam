@@ -1,5 +1,6 @@
 require "tam_tam/version"
 
+# The primary entry point for users.
 module TamTam
   @adapters ||= {}
 

@@ -2,8 +2,10 @@ require "tam_tam/core"
 require "tam_tam/log_set"
 
 module TamTam
+  # An exception to raise when abstract methods have not been implemented.
   class AbstractMethodError < StandardError; end
 
+  # An abstract base class for all adapters.
   class Adapter
     attr_accessor :path
 

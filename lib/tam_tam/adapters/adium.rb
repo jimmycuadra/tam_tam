@@ -4,6 +4,7 @@ require "nokogiri"
 
 module TamTam
   module Adapters
+    # Adapter for Adium. http://adium.im/
     class Adium < Adapter
       def self.default_path
         "#{Dir.home}/Library/Application Support/Adium 2.0/Users/Default/Logs"

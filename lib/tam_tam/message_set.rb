@@ -1,6 +1,8 @@
 require "tam_tam/message"
 
 module TamTam
+  # A collection of messages. Responsible for filtering and manipulating
+  # messages.
   class MessageSet
     include Enumerable
 

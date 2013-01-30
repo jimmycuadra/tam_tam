@@ -3,6 +3,8 @@ require "tam_tam/message_set"
 require "chronic"
 
 module TamTam
+  # A set of chat logs. Responsible for filtering at the chat log level.
+  # Delegates to the adapter for client-specific behavior.
   class LogSet
     attr_accessor :adapter, :matches
 

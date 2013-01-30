@@ -1,4 +1,5 @@
 module TamTam
+  # An individual message. Simple wrapper around a Hash with the message data.
   class Message
     attr_accessor :data
     protected :data
