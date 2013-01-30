@@ -44,6 +44,17 @@ describe TamTam::MessageSet do
     end
   end
 
+  describe "#by_count" do
+    it "returns a hash of message text by number of occurrences" do
+      messages_data << messages_data[0]
+      expect(subject.by_count).to eq(
+        "hey there" => 2,
+        "hi, how was your day?" => 1,
+        "great! yours?" => 1
+      )
+    end
+  end
+
   describe "#each" do
     it "yields each message to the block" do
       expect(subject.map(&:sender)).to eql(["wongo", "bongo", "wongo"])

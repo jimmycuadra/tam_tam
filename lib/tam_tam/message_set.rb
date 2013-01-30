@@ -29,6 +29,13 @@ module TamTam
       copy
     end
 
+    def by_count
+      Hash[group_by { |message| message.text }.inject({}) { |counts, groups|
+        counts[groups[0]] = groups[1].size
+        counts
+      }.sort_by { |key, value| -value }]
+    end
+
     def each
       data.each { |message| yield message }
     end
