@@ -1,5 +1,7 @@
 # TamTam
 
+[![Build Status](https://travis-ci.org/jimmycuadra/tam_tam.png?branch=master)](https://travis-ci.org/jimmycuadra/tam_tam)
+
 **TamTam** is a Ruby gem to parse, navigate, and analyze logs from chat clients. You can query logs in various ways, including finding the most common messages, messages containing a particular substring, or messages matching a regular expression. Logs can also be filtered by date or participants.
 
 TamTam is agnostic to operating system and chat client, and ships with adapters for:
