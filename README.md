@@ -2,13 +2,13 @@
 
 [![Build Status](https://travis-ci.org/jimmycuadra/tam_tam.png?branch=master)](https://travis-ci.org/jimmycuadra/tam_tam)
 
-**TamTam** is a Ruby gem to parse, navigate, and analyze logs from chat clients. You can query logs in various ways, including finding the most common messages, messages containing a particular substring, or messages matching a regular expression. Logs can also be filtered by date or participants.
+**TamTam** is a Ruby gem to parse, filter, and analyze logs from chat clients. You can filter by various factors: date, participants, or contents.
 
 TamTam is agnostic to operating system and chat client, and ships with adapters for:
 
 * Adium (OS X)
 
-Additional adapters are welcome via pull request.
+Additional adapters are planned, and welcome via pull request.
 
 ## Installation
 
@@ -55,7 +55,7 @@ TamTam.new(path: "/path/to/logs")
 
 #### Limiting the loaded adapters
 
-When you require `tam_tam`, all the included adapters are loaded. If you want to save memory and require only the one(s) you need, you may do so:
+When you `require "tam_tam"`, all the included adapters are loaded. If you want to save memory and require only the one(s) you need, you may do so:
 
 ``` ruby
 require "tam_tam/adapters/adium"
@@ -63,11 +63,11 @@ require "tam_tam/adapters/adium"
 logs = TamTam.new
 ```
 
-Details on using custom adapters are included later in this guide.
+If an adapter is not provided when calling `.new`, TamTam defaults to the Adium adapter, or the first registered adapter if the Adium adapter has not been loaded. Details on using custom adapters are included later in this guide.
 
 ### Filtering logs
 
-Logs can be filtered by participants and date. The following methods are chainable and modify the object in place.
+Logs can be filtered by participants and date. All the filter methods are chainable, and return a new `TamTam::Logs` object with the filters applied.
 
 #### #as
 
@@ -105,31 +105,19 @@ Limits logs to chats that occurred within a date range. Takes two dates, which, 
 logs.between(5.days.ago, Date.today)
 ```
 
-### Chaining the same method multiple times
-
-Note that if you call the same filter method more than once, you may not get any results because it's effectively creating a logical AND. To illustrate:
-
-``` ruby
-# Logs as MyAIMScreenName OR google.talk@gmail.com
-logs.as("MyAIMScreenName", "google.talk@gmail.com")
-
-# Logs as MyAIMScreenName AND google.talk@gmail.com (no matches)
-logs.as("MyAIMScreenName").as("google.talk@gmail.com")
-```
-
 ### Accessing messages
 
 Once you have filtered logs down to the set you want, you can examine the messages themselves:
 
 ``` ruby
-logs.messages
+messages = logs.messages
 ```
 
 At this point, the logs on disk are loaded into memory, so the first call to `messages` may take a while, depending on how many logs are being loaded. The messages object is enumerable, and can receive any of the usual iteration and transformation methods.
 
 ### Filtering messages
 
-Messages can be filtered by contents. The following methods are chainable and modify the messages object in place:
+Messages can be filtered by contents. All the filter methods are chainable and return a new `TamTam::MessageSet` object with the filters applied.
 
 #### #including
 
@@ -147,9 +135,29 @@ Limits messages to those that match the provided regular expression.
 messages.matching(/^lol,?\s+/)
 ```
 
+#### #sent_by
+
+Limits messages to those sent by the provided username.
+
+``` ruby
+messages.sent_by("MyFriendJoe")
+```
+
+### Analyzing logs
+
+These methods return interesting data about the messages.
+
+#### #by_count
+
+Returns a hash of all the messages grouped by text and the number of times a message with that text was sent. Useful for seeing what messages/phrases you and your chat buddies say most often.
+
+``` ruby
+messages.by_count # { "hi" => 4, "how's it going?" => 2 }
+```
+
 ### Individual messages
 
-When enumerating messages, each message is a simple object with the following attributes:
+When enumerating messages, each message is a `TamTam::Message` object with the following attributes:
 
 #### #sender
 
@@ -165,7 +173,7 @@ The date and time the message was sent, as a `Time` object.
 
 ## Custom adapters
 
-An adapter is a class that inherits from `TamTam::Adapter` and implements a few specific methods. Once you have defined your adapter class, register it with TamTam:
+An adapter is a class that inherits from `TamTam::Adapter` and implements its abstract interface. Once you have defined your adapter class, register it with TamTam:
 
 ``` ruby
 TamTam.register_adapter(:crazy_chat, CrazyChatAdapter)
@@ -174,14 +182,14 @@ TamTam.register_adapter(:crazy_chat, CrazyChatAdapter)
 Adapters must define the following methods:
 
 * `.default_path`
-* `.default_matches`
+* `#default_matches`
+* `#load_messages`
 * `#as`
 * `#with`
 * `#on`
 * `#between`
-* `#messages`
 
-See the in-code documentation for `TamTam::Adapter` for details.
+See any of the included adapters for examples.
 
 ## Contributing
 

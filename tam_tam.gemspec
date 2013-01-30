@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = TamTam::VERSION
   gem.authors       = ["Jimmy Cuadra"]
   gem.email         = ["jimmy@jimmycuadra.com"]
-  gem.description   = %q{Parse, navigate, and analyze logs from online chat clients.}
-  gem.summary       = %q{Parse, navigate, and analyze logs from online chat clients.}
-  gem.homepage      = ""
+  gem.description   = %q{Parse, filter, and analyze logs from online chat clients.}
+  gem.summary       = %q{Parse, filter, and analyze logs from online chat clients.}
+  gem.homepage      = "https://github.com/jimmycuadra/tam_tam"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
