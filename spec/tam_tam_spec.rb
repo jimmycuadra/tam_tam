@@ -13,11 +13,11 @@ describe TamTam do
       )
     end
 
-    it "returns a the first registered adapter if Adium is not registered" do
+    it "returns the first registered adapter if Adium is not registered" do
       begin
         described_class.unregister_adapter(:adium)
         expect(described_class.new.adapter).to be_a(
-          described_class::Adapters::Test
+          described_class::Adapters::Messages
         )
       ensure
         described_class.register_adapter(:adium, TamTam::Adapters::Adium)
