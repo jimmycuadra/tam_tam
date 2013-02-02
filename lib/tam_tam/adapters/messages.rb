@@ -6,7 +6,8 @@ module TamTam
   module Adapters
     # Adapter for Apple Messages (iChat).
     class Messages < Adapter
-      APPLE_EPOCH = Time.at(978307200).utc
+      APPLE_EPOCH = 978307200
+
       attr_accessor :db
 
       def self.default_path
@@ -33,7 +34,7 @@ module TamTam
           {
             sender: row["handle_id"],
             text: row["text"],
-            time: (APPLE_EPOCH + row["date"].to_i).localtime
+            time: Time.at(APPLE_EPOCH + row["date"].to_i).localtime
           }
         end
 
