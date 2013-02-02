@@ -23,11 +23,13 @@ module TamTam
       end
 
       def load_messages(matches)
-        sql = <<-SQL
-SELECT handle_id, text, date FROM message WHERE message.ROWID IN (?, ?, ?)
-        SQL
 
-        messages = db.execute(sql, matches).map do |row|
+        sql = %{
+          SELECT handle_id, text, date
+          FROM message
+          WHERE message.ROWID IN (#{matches.map(&:to_i).join(",")})
+        }
+        messages = db.execute(sql).map do |row|
           {
             sender: row["handle_id"],
             text: row["text"],
@@ -64,9 +66,13 @@ SELECT handle_id, text, date FROM message WHERE message.ROWID IN (?, ?, ?)
           handles
         end
 
-        sql = "SELECT ROWID, id FROM handle WHERE handle.ROWID IN (?, ?, ?)"
+        sql = %{
+          SELECT ROWID, id
+          FROM handle
+          WHERE handle.ROWID IN (#{handles.keys.map(&:to_i).join(",")})
+        }
 
-        db.execute(sql, handles.keys) do |row|
+        db.execute(sql) do |row|
           handles[row["ROWID"]] = row["id"]
         end
 
