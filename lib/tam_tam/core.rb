@@ -1,4 +1,5 @@
 require "tam_tam/version"
+require "tam_tam/log_set"
 
 # The primary entry point for users.
 module TamTam
