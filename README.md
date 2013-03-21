@@ -1,6 +1,6 @@
 # TamTam
 
-[![Build Status](https://travis-ci.org/jimmycuadra/tam_tam.png?branch=master)](https://travis-ci.org/jimmycuadra/tam_tam)
+[![Build Status](https://travis-ci.org/jimmycuadra/tam_tam.png?branch=master)](https://travis-ci.org/jimmycuadra/tam_tam) [![Code Climate](https://codeclimate.com/github/jimmycuadra/tam_tam.png)](https://codeclimate.com/github/jimmycuadra/tam_tam)
 
 **TamTam** is a Ruby gem to parse, filter, and analyze logs from chat clients. You can filter by various factors: date, participants, or contents.
 
